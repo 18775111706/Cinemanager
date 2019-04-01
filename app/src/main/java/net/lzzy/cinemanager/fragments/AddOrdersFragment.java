@@ -1,5 +1,6 @@
 package net.lzzy.cinemanager.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
  * Description:
  */
 public class AddOrdersFragment extends BaseFragment {
+    private OnFragmentInteractionLisener listener;
     public AddOrdersFragment(){}
 
     @Override
@@ -26,5 +28,36 @@ public class AddOrdersFragment extends BaseFragment {
         return 0;
     }
 
+    @Override
+    public void search(String koy) {
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            listener=(OnFragmentInteractionLisener) context;
+
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+"必须实现OnFragmentInteractionListener ");
+        }
+
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            listener.hideSearch();
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener=null;
+    }
 }
 

@@ -1,5 +1,6 @@
 package net.lzzy.cinemanager.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -34,6 +35,9 @@ public class AddCinemaFragment extends BaseFragment {
     private String area="鱼峰区";
     private TextView tvArea;
 
+    private OnFragmentInteractionLisener listener;
+    private OnCinemaCreatedListener cinemaListensr;
+
     @Override
     protected void populate() {
         edtName=find(R.id.activity_cinema_dialog_edt);
@@ -42,7 +46,8 @@ public class AddCinemaFragment extends BaseFragment {
 
             String name=edtName.getText().toString();
             if (TextUtils.isEmpty(name)){
-                Toast.makeText(getActivity(), "名称不能为空", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "名称不能为空",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
             Cinema cinema=new Cinema();
@@ -54,6 +59,7 @@ public class AddCinemaFragment extends BaseFragment {
             //adapter.add(cinema);
 
             edtName.setText("");
+            cinemaListensr.saveCinema(cinema);
 
 
         });
@@ -84,6 +90,43 @@ public class AddCinemaFragment extends BaseFragment {
     @Override
     public int getLayoutRes() {
         return R.layout.fragment_cinemas_add;
+    }
+
+    @Override
+    public void search(String kw) {
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            listener=(OnFragmentInteractionLisener) context;
+            cinemaListensr=(OnCinemaCreatedListener) context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+"必须实现OnFragmentInteractionListener ");
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            listener.hideSearch();
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener=null;
+        cinemaListensr=null;
+    }
+
+    public interface OnCinemaCreatedListener{
+
+        void cancelAddCinema();
+        void saveCinema(Cinema cinema);
     }
 
 }
