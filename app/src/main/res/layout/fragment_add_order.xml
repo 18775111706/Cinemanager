@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/darker_gray"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:text="添加订单"/>
+    <EditText
+        android:layout_marginTop="5dp"
+        android:id="@+id/add_order_edt_movie_name"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:hint="@string/print_movie_name"
+        android:singleLine="true"
+
+        android:background="@drawable/shape"
+        android:layout_height="40dp"/>
+    <LinearLayout
+        android:id="@+id/add_order_choice_layout"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:text="@string/choose_watch_time"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/add_order_select_time"
+            android:layout_weight="1"
+            android:text="点击"
+            android:textSize="20sp"
+            android:gravity="right"
+            android:textColor="@android:color/holo_green_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/add_order_sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+
+    </Spinner>
+    <EditText
+        android:id="@+id/add_order_edt_movie_price"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:inputType="numberDecimal"
+        android:hint="@string/print_price"
+        android:singleLine="true"
+
+        android:background="@drawable/shape"
+        android:layout_height="40dp"/>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/add_order_btn_create"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="生成二维码"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/add_order_btn_save"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="保存"
+            android:layout_height="wrap_content"/>
+        <Button
+
+            android:id="@+id/add_order_btn_cancel"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="取消"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/add_order_rq_code"
+        android:layout_width="match_parent"
+        android:src="@drawable/qr_code"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

@@ -1,5 +1,6 @@
 package net.lzzy.cinemanager.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,7 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.hp.hpl.sparta.xpath.ParentNodeTest;
+
 import net.lzzy.cinemanager.R;
+import net.lzzy.cinemanager.activities.MainActivity;
 import net.lzzy.cinemanager.models.Cinema;
 import net.lzzy.cinemanager.models.CinemaFactory;
 import net.lzzy.sqllib.GenericAdapter;
@@ -62,6 +66,8 @@ public class CinemasFragment extends BaseFragment {
                 }
             };
             lv.setAdapter(adapter);
+
+
             if (cinema !=null){
                 save(cinema);
             }
