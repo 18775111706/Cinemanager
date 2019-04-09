@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.SparseArray;
@@ -29,9 +30,10 @@ import net.lzzy.cinemanager.utils.ViewUtils;
  * @author Administrator
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
-, OnFragmentInteractionLisener,AddCinemaFragment.OnCinemaCreatedListener,AddOrdersFragment.OnOrderCreatedListener {
+, OnFragmentInteractionLisener,AddCinemaFragment.OnCinemaCreatedListener
+        ,AddOrdersFragment.OnOrderCreatedListener,CinemasFragment.OnCinemaSelectedListener {
 
-
+    public static String EXTRA_CINEMA_ID;
     private FragmentManager manager=getSupportFragmentManager();
     private LinearLayout layoutMenu;
     private TextView tvTitle;
@@ -162,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction transaction=manager.beginTransaction();
         if (cinemasFragment==null){
             //创建CinemasFragment同时要传Cinema对象
-            cinemasFragment=new CinemasFragment(cinema);
+            cinemasFragment=CinemasFragment.newInstance(cinema);
             fragmentArray.put(R.id.bar_title_tv_view_cinema,cinemasFragment);
             transaction.add(R.id.fragment_container,cinemasFragment);
         }else {
@@ -220,6 +222,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         transaction.hide(addOrderFragment).show(orderFragment).commit();
         tvTitle.setText(titleArray.get(R.id.bar_title_tv_my_order));
+    }
+
+    @Override
+    public void onCinemaSelected(String cinemaId) {
+        Intent intent=new Intent(this,CinemaOrdersActivity.class);
+        intent.putExtra(EXTRA_CINEMA_ID,cinemaId);
+        startActivity(intent);
     }
 }
 

@@ -39,12 +39,19 @@ public class OrdersFragment extends BaseFragment {
     private GenericAdapter<Order> adapter;
     private Order order;
     private float touchX1;
+    private static final String ARG_NEW_ORDER="argNewOrder";
     private boolean isDelete=false;
     public OrdersFragment(){}
     public OrdersFragment(Order order){
         this.order=order;
     }
-
+    public static OrdersFragment newInstance(Order order){
+        OrdersFragment fragment=new OrdersFragment();
+        Bundle args=new Bundle();
+        args.putParcelable(ARG_NEW_ORDER,order);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected void populate() {

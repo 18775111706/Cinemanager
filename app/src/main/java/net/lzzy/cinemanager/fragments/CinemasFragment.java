@@ -1,16 +1,20 @@
 package net.lzzy.cinemanager.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.ContentFrameLayout;
 import androidx.fragment.app.Fragment;
 
 import com.hp.hpl.sparta.xpath.ParentNodeTest;
@@ -33,11 +37,19 @@ public class CinemasFragment extends BaseFragment {
     private List<Cinema> cinemas;
     private CinemaFactory factory = CinemaFactory.getInstance();
     private ListView lv;
+    private static final String ARG_NEW_CINEMA="argNewCinema";
     private Cinema cinema;
-
+    private OnCinemaSelectedListener listener;
     public CinemasFragment(){}
     public CinemasFragment(Cinema cinema){
         this.cinema = cinema;
+    }
+    public static CinemasFragment newInstance(Cinema cinema){
+        CinemasFragment fragment=new CinemasFragment();
+        Bundle args=new Bundle();
+        args.putParcelable(ARG_NEW_CINEMA,cinema);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -66,9 +78,15 @@ public class CinemasFragment extends BaseFragment {
                 }
             };
             lv.setAdapter(adapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listener.onCinemaSelected(adapter.getItem(position).getId().toString());
+            }
+        });
 
 
-            if (cinema !=null){
+        if (cinema !=null){
                 save(cinema);
             }
         }
@@ -94,5 +112,27 @@ public class CinemasFragment extends BaseFragment {
 
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnCinemaSelectedListener){
+            listener=(OnCinemaSelectedListener) context;
+        }else {
+            throw new ClassCastException(context.toString()+"必须实现OnCinemaSelectedListener");
+        }
+
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener=null;
+    }
+
+    public interface OnCinemaSelectedListener{
+        void onCinemaSelected(String cinemaId);
     }
 }
